@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Película</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Editar Película</h1>
+  <!-- th:action actualizado para usar el ID de la película -->
+  <form th:action="@{/films/{id}(id=${film.filmId})}" th:object="${film}" method="post">
+    <!-- Campo oculto para el ID de la película -->
+    <input type="hidden" th:field="*{filmId}" />
+
+    <!-- Título -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Título:</label>
+      <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="Ingresa el título" required />
+    </div>
+
+    <!-- Descripción -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripción:</label>
+      <textarea id="description" th:field="*{description}" class="form-control" rows="3" placeholder="Escribe una breve descripción" required></textarea>
+    </div>
+
+    <!-- Año de Lanzamiento -->
+    <div class="mb-3">
+      <label for="releaseYear" class="form-label">Año de Lanzamiento:</label>
+      <input type="number" id="releaseYear" th:field="*{releaseYear}" class="form-control" placeholder="Ej: 2023" required />
+    </div>
+
+    <!-- Duración del Alquiler -->
+    <div class="mb-3">
+      <label for="rentalDuration" class="form-label">Duración del Alquiler (días):</label>
+      <input type="number" id="rentalDuration" th:field="*{rentalDuration}" class="form-control" placeholder="Ej: 7" />
+    </div>
+
+    <!-- Tarifa de Alquiler -->
+    <div class="mb-3">
+      <label for="rentalRate" class="form-label">Tarifa de Alquiler:</label>
+      <input type="number" step="0.01" id="rentalRate" th:field="*{rentalRate}" class="form-control" placeholder="Ej: 5.99" />
+    </div>
+
+    <!-- Duración -->
+    <div class="mb-3">
+      <label for="length" class="form-label">Duración (minutos):</label>
+      <input type="number" id="length" th:field="*{length}" class="form-control" placeholder="Ej: 120" />
+    </div>
+
+    <!-- Costo de Reemplazo -->
+    <div class="mb-3">
+      <label for="replacementCost" class="form-label">Costo de Reemplazo:</label>
+      <input type="number" step="0.01" id="replacementCost" th:field="*{replacementCost}" class="form-control" placeholder="Ej: 19.99" />
+    </div>
+
+    <!-- Clasificación -->
+    <div class="mb-3">
+      <label for="rating" class="form-label">Clasificación:</label>
+      <input type="text" id="rating" th:field="*{rating}" class="form-control" placeholder="Ej: PG-13" />
+    </div>
+
+    <!-- Características Especiales -->
+    <div class="mb-3">
+      <label for="specialFeatures" class="form-label">Características Especiales:</label>
+      <textarea id="specialFeatures" th:field="*{specialFeatures}" class="form-control" rows="2" placeholder="Ej: Comentarios del director"></textarea>
+    </div>
+
+    <!-- Idioma (Campo Oculto) -->
+    <input type="hidden" th:field="*{languageId}" />
+
+    <!-- Categorías -->
+    <div class="mb-3">
+      <label for="categories" class="form-label">Categorías:</label>
+      <select id="categories" th:field="*{categoryIds}" class="form-select" multiple required>
+        <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}"></option>
+      </select>
+    </div>
+
+    <!-- Botones -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a th:href="@{/films}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<!-- Script de confirmación -->
+<script>
+  document.querySelector('form').onsubmit = function () {
+    return confirm('¿Estás seguro de guardar los cambios?');
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
